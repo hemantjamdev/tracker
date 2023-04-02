@@ -1,10 +1,7 @@
 class DateHelper {
   static String timeDiff(
-      {required String startTime, required String stopTime}) {
-    DateTime startingTime = DateTime.parse(startTime);
-    DateTime endingTime = DateTime.parse(stopTime);
-
-    Duration diff = endingTime.difference(startingTime);
+      {required DateTime startTime, required DateTime stopTime}) {
+    Duration diff = stopTime.difference(startTime);
 
     String hours = diff.inHours.remainder(24).toString().padLeft(2, "0");
     String minutes = diff.inMinutes.remainder(60).toString().padLeft(2, "0");

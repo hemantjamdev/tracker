@@ -1,6 +1,6 @@
 import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../tracker_model.dart';
+import '../model/tracker_model.dart';
 
 class FirebaseHelper {
   static setData({required TrackerModel data}) async {
@@ -14,6 +14,10 @@ class FirebaseHelper {
     } catch (e) {
       log("------error------$e");
     }
+  }
+
+  static Stream<QuerySnapshot<Map<String, dynamic>>> dataStream() {
+    return FirebaseFirestore.instance.collection("tracking").snapshots();
   }
 
   static deleteDate(TrackerModel item) async {
