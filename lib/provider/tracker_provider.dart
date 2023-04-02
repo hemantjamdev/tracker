@@ -5,6 +5,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:tracker/tracker_model.dart';
+import 'package:tracker/utils/date_formate.dart';
+import 'package:tracker/utils/firebase_helper.dart';
 import 'package:uuid/uuid.dart';
 
 class TrackerProvider extends ChangeNotifier {
@@ -21,26 +23,24 @@ class TrackerProvider extends ChangeNotifier {
 
   void startStopWatch() {
     if (stopwatch.isRunning) {
-      // stopTime = DateFormat("hh:mm").format(DateTime.now());
-
       stopwatch.stop();
-      // uid = uuid.v1();
       stopTime = DateFormat("yyyy-mm-dd hh:mm:ss").format(DateTime.now());
       TrackerModel data = TrackerModel(
           uid: uid,
           startTime: startTime,
           stopTime: stopTime,
-          timeSpend: dateFormat(startTime, stopTime));
-      setData(data);
+          timeSpend:
+              DateHelper.timeDiff(startTime: startTime, stopTime: stopTime));
+      FirebaseHelper.setData(data: data);
       notifyListeners();
     } else {
       stopwatch.start();
-
       uid = uuid.v1();
       startTime = DateFormat("yyyy-mm-dd hh:mm:ss").format(DateTime.now());
       TrackerModel data = TrackerModel(
           uid: uid, startTime: startTime, stopTime: stopTime, timeSpend: "");
-      setData(data);
+      FirebaseHelper.setData(data: data);
+      stopTime = "";
       startWatch();
       notifyListeners();
     }
@@ -63,7 +63,7 @@ class TrackerProvider extends ChangeNotifier {
       );
     }
   }
-
+/*
   setData(TrackerModel time) async {
     try {
       final storage = FirebaseFirestore.instance;
@@ -72,16 +72,16 @@ class TrackerProvider extends ChangeNotifier {
           .doc(time.uid)
           .set(time.toMap())
           .onError((error, stackTrace) => log(error.toString()));
-      stopTime = "";
+
     } catch (e) {
       log("------errror------$e");
     }
-  }
+  }*/
 
-  String dateFormat(String startTime, String endTime) {
+/* String dateFormat(String startTime, String endTime) {
     DateTime _startTime = DateTime.parse(startTime);
     DateTime _endTime = DateTime.parse(endTime);
     Duration difference = _endTime.difference(_startTime);
-    return "${difference.inHours}:${difference.inMinutes.remainder(60)}:${difference.inSeconds.remainder(60)}";
-  }
+
+  }*/
 }

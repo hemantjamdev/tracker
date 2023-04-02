@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:tracker/provider/tracker_provider.dart';
 import 'package:intl/intl.dart';
 import 'package:tracker/tracker_model.dart';
+import 'package:tracker/utils/firebase_helper.dart';
 
 class TrackingPage extends StatelessWidget {
   const TrackingPage({Key? key}) : super(key: key);
@@ -48,7 +49,8 @@ class TrackingPage extends StatelessWidget {
             ),
             Expanded(
               child: Container(
-                margin: EdgeInsets.all(8),
+                width: MediaQuery.of(context).size.width,
+                margin: EdgeInsets.symmetric(vertical: 15),
                 padding: EdgeInsets.all(15),
                 decoration: BoxDecoration(
                   border: Border.all(
@@ -58,35 +60,51 @@ class TrackingPage extends StatelessWidget {
                 ),
                 child: StreamBuilder(
                     stream: FirebaseFirestore.instance
-                        .collection("tracking").orderBy("uid",descending: true)
+                        .collection("tracking")
                         .snapshots(),
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
                         QuerySnapshot doc = snapshot.data as QuerySnapshot;
                         if (doc.docs.isNotEmpty) {
                           return ListView.builder(
-                              itemCount: snapshot.data!.docs.length,
+                              itemCount: snapshot.data!.docs.reversed.length,
                               itemBuilder: (context, int index) {
                                 TrackerModel item = TrackerModel.fromJson(
-                                    doc.docs[index].data()
+                                    doc.docs.reversed.toList()[index].data()
                                         as Map<String, dynamic>);
+                                DateTime newStartDate =
+                                    DateTime.parse(item.startTime!);
+                                String startTime = DateFormat("hh:mm:ss aa")
+                                    .format(newStartDate);
+                                String stopTime = "";
+                                if (item.stopTime != "") {
+                                  DateTime newStopDate =
+                                      DateTime.parse(item.stopTime!);
+                                  stopTime = DateFormat("hh:mm:ss aa")
+                                      .format(newStopDate);
+                                }
                                 return Card(
                                   child: ListTile(
-
-                                    title: Text(
-                                        "start time : ${item.startTime.toString()}"),
-                                    subtitle: Text(
-                                        "stopped time : ${item.stopTime.toString()}"),
+                                    onTap: () async {
+                                      FirebaseHelper.deleteDate(item);
+                                      /* final instance =
+                                          FirebaseFirestore.instance;
+                                      await instance
+                                          .collection("tracking")
+                                          .doc(item.uid)
+                                          .delete();*/
+                                    },
+                                    title: Text("$startTime - $stopTime"),
                                     trailing:
                                         Text("${item.timeSpend.toString()}"),
                                   ),
                                 );
                               });
                         } else {
-                          return Text("no data");
+                          return Center(child: Text("no data"));
                         }
                       } else {
-                        return Text("no data");
+                        return Center(child: Text("no stream connection"));
                       }
                     }),
               ),
