@@ -1,5 +1,9 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:screen_capturer/screen_capturer.dart';
 import 'package:tracker/provider/tracker_provider.dart';
 
 import '../widgets/custom_button.dart';
@@ -12,6 +16,21 @@ class TrackingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          try {
+            await ScreenCapturer.instance
+                .capture(
+                    imagePath: "/devubhamanek/desktop",
+                    mode: CaptureMode.screen)
+                .then(
+                    (value) => log(value?.imagePath.toString() ?? "not found"));
+            log(DateFormat("dd-MM-yyyy hh:mm:ss aa").format(DateTime.now()));
+          } catch (e) {
+            log(e.toString());
+          }
+        },
+      ),
       body: Container(
         margin: const EdgeInsets.all(18),
         child: Column(

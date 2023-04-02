@@ -11,5 +11,5 @@ class TimerHelper {
  static String getString({required String format, required DateTime dateTime}) =>
       DateFormat(format).format(dateTime);
 
- static DateTime getTime({required String dateTime}) => DateTime.parse(dateTime);
+ static DateTime getTime({required String dateTime}) => DateTime.parse(dateTime.toString().replaceAll(" PM","",).replaceAll(" AM", ""));
 }

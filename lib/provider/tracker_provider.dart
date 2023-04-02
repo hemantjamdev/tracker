@@ -18,7 +18,10 @@ class TrackerProvider extends ChangeNotifier {
   final Stopwatch cStopwatch = Stopwatch();
   final Stopwatch tStopwatch = Stopwatch();
   String startTime = "";
+  String startTimeForFb = "";
+
   String stopTime = "";
+  String stopTimeForFb = "";
   String totalTime = "";
   String uid = "";
 
@@ -35,13 +38,26 @@ class TrackerProvider extends ChangeNotifier {
   void startTimeWatch() {
     cStopwatch.start();
     tStopwatch.start();
+
     uid = uuid.v1();
+
     startTime = TimerHelper.getString(
-        format: "yyyy-mm-dd hh:mm:ss", dateTime: DateTime.now());
+        format: "yyyy-MM-dd hh:mm:ss", dateTime: DateTime.now());
+    startTimeForFb = DateTime.now().toString();
     stopTime = "";
+
     TrackerModel data = TrackerModel(
-        uid: uid, startTime: startTime, stopTime: stopTime, timeSpend: "");
+      uid: uid,
+      startTime: TimerHelper.getString(
+          format: "hh:mm:ss aa",
+          dateTime: TimerHelper.getTime(dateTime: startTimeForFb)),
+      stopTime: stopTime,
+      timeSpend: "",
+    );
+
+
     FirebaseHelper.setData(data: data);
+
     addTimeInStream();
   }
 
@@ -51,11 +67,14 @@ class TrackerProvider extends ChangeNotifier {
     tStopwatch.stop();
 
     stopTime = TimerHelper.getString(
-        format: "yyyy-mm-dd hh:mm:ss", dateTime: DateTime.now());
+        format: "yyyy-MM-dd hh:mm:ss", dateTime: DateTime.now());
+    stopTimeForFb = DateTime.now().toString();
     TrackerModel data = TrackerModel(
         uid: uid,
-        startTime: startTime,
-        stopTime: stopTime,
+        startTime: TimerHelper.getString(
+            format: "hh:mm:ss aa",
+            dateTime: TimerHelper.getTime(dateTime: startTimeForFb)),
+        stopTime: TimerHelper.getString(format: "hh:mm:ss aa", dateTime:TimerHelper.getTime(dateTime: stopTimeForFb)),
         timeSpend: DateHelper.timeDiff(
           startTime: TimerHelper.getTime(dateTime: startTime),
           stopTime: TimerHelper.getTime(dateTime: stopTime),
@@ -71,7 +90,7 @@ class TrackerProvider extends ChangeNotifier {
           String cTime =
               TimerHelper.getTimer(milli: cStopwatch.elapsed.inMilliseconds);
           String tTime =
-          TimerHelper.getTimer(milli: tStopwatch.elapsed.inMilliseconds);
+              TimerHelper.getTimer(milli: tStopwatch.elapsed.inMilliseconds);
           currentTimeController.add(cTime);
           totalTimeController.add(tTime);
         },
