@@ -8,7 +8,7 @@ import 'package:tracker/utils/timer_helper.dart';
 import 'package:uuid/uuid.dart';
 
 class TrackerProvider extends ChangeNotifier {
-  final Uuid uuid = const Uuid();
+ // final Uuid uuid = const Uuid();
   final StreamController<String> currentTimeController =
       StreamController<String>();
   final StreamController<String> totalTimeController =
@@ -39,11 +39,12 @@ class TrackerProvider extends ChangeNotifier {
     cStopwatch.start();
     tStopwatch.start();
 
-    uid = uuid.v1();
+   // uid = uuid.v1();
 
     startTime = TimerHelper.getString(
         format: "yyyy-MM-dd hh:mm:ss", dateTime: DateTime.now());
     startTimeForFb = DateTime.now().toString();
+    uid = startTime;
     stopTime = "";
 
     TrackerModel data = TrackerModel(

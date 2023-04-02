@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:tracker/constants/Strings.dart';
 import '../model/tracker_model.dart';
 
 class FirebaseHelper {
@@ -7,7 +8,7 @@ class FirebaseHelper {
     try {
       final storage = FirebaseFirestore.instance;
       await storage
-          .collection("tracking")
+          .collection(Strings.getDatabaseName())
           .doc(data.uid)
           .set(data.toMap())
           .onError((error, stackTrace) => log(error.toString()));
@@ -17,7 +18,7 @@ class FirebaseHelper {
   }
 
   static Stream<QuerySnapshot<Map<String, dynamic>>> dataStream() {
-    return FirebaseFirestore.instance.collection("tracking").snapshots();
+    return FirebaseFirestore.instance.collection(Strings.getDatabaseName()).snapshots();
   }
 
   static deleteDate(TrackerModel item) async {
