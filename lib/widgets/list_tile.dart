@@ -10,10 +10,10 @@ Widget buildCard(
     required int index}) {
   return Card(
     child: ListTile(
-      leading: Text((index + 1).toString()),
-      onTap: () async {
+      //leading: Text((index + 1).toString()),
+     /* onTap: () async {
         FirebaseHelper.deleteDate(item);
-      },
+      },*/
       title: Text("$startTime - $stopTime"),
       trailing: Text(item.timeSpend==""?"--:--:--":item.timeSpend!),
     ),
