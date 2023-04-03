@@ -23,6 +23,6 @@ class FirebaseHelper {
 
   static deleteDate(TrackerModel item) async {
     final instance = FirebaseFirestore.instance;
-    await instance.collection("tracking").doc(item.uid).delete();
+    await instance.collection(Strings.getDatabaseName()).doc(item.uid).delete();
   }
 }

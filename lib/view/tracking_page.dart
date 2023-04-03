@@ -1,7 +1,10 @@
 import 'dart:developer';
+import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:screen_capturer/screen_capturer.dart';
 import 'package:tracker/provider/tracker_provider.dart';
@@ -16,21 +19,33 @@ class TrackingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
+     /* floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          try {
+
+            ProcessResult result = await Process.run('screencapture', ['-x', '-t', 'png', '-']);
+            if (result.exitCode == 0) {
+              log("---> result <---- ${result.stderr}");
+              log("---> result <---- ${result.exitCode}");
+              log("---> result <---- ${result.pid}");
+              log("---> result <---- ${result.stdout}");
+              log("---> result <---- ${result.toString()}");
+              return result.stdout;
+            } else {
+              throw Exception('Failed to take screenshot');
+            }
+
+         *//* try {
+            Directory? dir = await getDownloadsDirectory();
+            log("-----path of given dir from pc ---->   ${dir!.path}   <------");
             await ScreenCapturer.instance
-                .capture(
-                    imagePath: "/devubhamanek/desktop",
-                    mode: CaptureMode.screen)
+                .capture(imagePath: dir.path, mode: CaptureMode.window)
                 .then(
                     (value) => log(value?.imagePath.toString() ?? "not found"));
-            log(DateFormat("dd-MM-yyyy hh:mm:ss aa").format(DateTime.now()));
           } catch (e) {
             log(e.toString());
-          }
+          }*//*
         },
-      ),
+      ),*/
       body: Container(
         margin: const EdgeInsets.all(18),
         child: Column(
@@ -49,7 +64,8 @@ class TrackingPage extends StatelessWidget {
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
                             "${snapshot.data}",
-                            style: const TextStyle(fontSize: 22),
+                            style: const TextStyle(
+                                fontSize: 28, fontWeight: FontWeight.bold),
                           ),
                         );
                       }),
@@ -80,7 +96,8 @@ class TrackingPage extends StatelessWidget {
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
                         "Total time : ${snapshot.data}",
-                        style: const TextStyle(fontSize: 22),
+                        style: const TextStyle(
+                            fontSize: 28, fontWeight: FontWeight.bold),
                       ),
                     );
                   }),

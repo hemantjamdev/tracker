@@ -15,7 +15,7 @@ Widget buildCard(
         FirebaseHelper.deleteDate(item);
       },
       title: Text("$startTime - $stopTime"),
-      trailing: Text(item.timeSpend.toString()),
+      trailing: Text(item.timeSpend==""?"--:--:--":item.timeSpend!),
     ),
   );
 }

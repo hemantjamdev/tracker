@@ -24,26 +24,13 @@ class TimeList extends StatelessWidget {
                   itemBuilder: (context, int index) {
                     TrackerModel item = TrackerModel.fromJson(
                         doc.docs[index].data() as Map<String, dynamic>);
-                    log("this is the data coming------${item.startTime}");
-                 //   log("this is the data converted------${TimerHelper.getTime(dateTime: item.startTime!)}");
 
                     return buildCard(
-                        index: index,
-                        item: item,
-                        startTime: item.startTime!
-                        /* TimerHelper.getString(
-                          format: "hh:mm:ss aa",
-                          dateTime:
-                              TimerHelper.getTime(dateTime: item.startTime!))*/
-                        ,
-                        stopTime: item.stopTime != "" ? item.stopTime! : ""
-                        /* item.stopTime != ""
-                          ? TimerHelper.getString(
-                              format: "hh:mm:ss aa",
-                              dateTime: TimerHelper
-                                  .getTime(dateTime: item.stopTime!))*/
-                        //      : "",
-                        );
+                      index: index,
+                      item: item,
+                      startTime: item.startTime!,
+                      stopTime: item.stopTime != "" ? item.stopTime! : "Running",
+                    );
                   });
             } else {
               return Widgets.noData();
