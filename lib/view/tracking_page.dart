@@ -1,8 +1,8 @@
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screen_capture/flutter_screen_capture.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
@@ -14,17 +14,24 @@ import '../widgets/info.dart';
 import '../widgets/time_list.dart';
 
 class TrackingPage extends StatelessWidget {
-  const TrackingPage({Key? key}) : super(key: key);
-
+   TrackingPage({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     /* floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton(
         onPressed: () async {
+         CapturedScreenArea? area = await ScreenCapture().captureEntireScreen();
+          log("---> result <---- ${area!.imageFormat.toString()}");
+       // area.height
+          log("---> result <---- ${area.height}");
+        //  log("---> result <---- ${area!.imageFormat.toString()}");
+         // log("---> result <---- ${area!.imageFormat.toString()}");
+          //log("---> result <---- ${area!.imageFormat.toString()}");
+         // log("---> result <---- ${area!.imageFormat.toString()}");
 
-            ProcessResult result = await Process.run('screencapture', ['-x', '-t', 'png', '-']);
-            if (result.exitCode == 0) {
-              log("---> result <---- ${result.stderr}");
+          //  ProcessResult result = await Process.run('screencapture', ['-x', '-t', 'png', '-']);
+         /*   if (result.exitCode == 0) {
+              //log("---> result <---- ${result.}");
               log("---> result <---- ${result.exitCode}");
               log("---> result <---- ${result.pid}");
               log("---> result <---- ${result.stdout}");
@@ -32,20 +39,25 @@ class TrackingPage extends StatelessWidget {
               return result.stdout;
             } else {
               throw Exception('Failed to take screenshot');
-            }
+            }*/
 
-         *//* try {
+         /* try {
             Directory? dir = await getDownloadsDirectory();
             log("-----path of given dir from pc ---->   ${dir!.path}   <------");
-            await ScreenCapturer.instance
-                .capture(imagePath: dir.path, mode: CaptureMode.window)
-                .then(
-                    (value) => log(value?.imagePath.toString() ?? "not found"));
+           CapturedData? file= await ScreenCapturer.instance
+                .capture(imagePath: dir.path, mode: CaptureMode.screen,silent: false);
+            if(file!=null){
+              log("------> ${file!.imagePath} <-------");
+            }else{
+              log("-----> file is nulll  <-----");
+            }
+            // .then(
+                //    (value) => log(value?.imagePath.toString() ?? "not found"));
           } catch (e) {
             log(e.toString());
-          }*//*
+          }*/
         },
-      ),*/
+      ),
       body: Container(
         margin: const EdgeInsets.all(18),
         child: Column(

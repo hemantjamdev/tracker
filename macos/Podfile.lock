@@ -635,6 +635,8 @@ PODS:
     - "gRPC-C++ (~> 1.44.0)"
     - leveldb-library (~> 1.22)
     - nanopb (< 2.30910.0, >= 2.30908.0)
+  - flutter_screen_capture (0.0.1):
+    - FlutterMacOS
   - FlutterMacOS (1.0.0)
   - GoogleUtilities/Environment (7.11.0):
     - PromisesObjC (< 3.0, >= 1.2)
@@ -710,13 +712,17 @@ PODS:
   - PromisesObjC (2.2.0)
   - screen_capturer (0.1.0):
     - FlutterMacOS
+  - screen_retriever (0.0.1):
+    - FlutterMacOS
 
 DEPENDENCIES:
   - cloud_firestore (from `Flutter/ephemeral/.symlinks/plugins/cloud_firestore/macos`)
   - firebase_core (from `Flutter/ephemeral/.symlinks/plugins/firebase_core/macos`)
+  - flutter_screen_capture (from `Flutter/ephemeral/.symlinks/plugins/flutter_screen_capture/macos`)
   - FlutterMacOS (from `Flutter/ephemeral`)
   - path_provider_foundation (from `Flutter/ephemeral/.symlinks/plugins/path_provider_foundation/macos`)
   - screen_capturer (from `Flutter/ephemeral/.symlinks/plugins/screen_capturer/macos`)
+  - screen_retriever (from `Flutter/ephemeral/.symlinks/plugins/screen_retriever/macos`)
 
 SPEC REPOS:
   trunk:
@@ -739,12 +745,16 @@ EXTERNAL SOURCES:
     :path: Flutter/ephemeral/.symlinks/plugins/cloud_firestore/macos
   firebase_core:
     :path: Flutter/ephemeral/.symlinks/plugins/firebase_core/macos
+  flutter_screen_capture:
+    :path: Flutter/ephemeral/.symlinks/plugins/flutter_screen_capture/macos
   FlutterMacOS:
     :path: Flutter/ephemeral
   path_provider_foundation:
     :path: Flutter/ephemeral/.symlinks/plugins/path_provider_foundation/macos
   screen_capturer:
     :path: Flutter/ephemeral/.symlinks/plugins/screen_capturer/macos
+  screen_retriever:
+    :path: Flutter/ephemeral/.symlinks/plugins/screen_retriever/macos
 
 SPEC CHECKSUMS:
   abseil: ebe5b5529fb05d93a8bdb7951607be08b7fa71bc
@@ -755,6 +765,7 @@ SPEC CHECKSUMS:
   FirebaseCore: e317665b9d744727a97e623edbbed009320afdd7
   FirebaseCoreInternal: 8845798510aae74703467480f71ac613788d0696
   FirebaseFirestore: 3963a6edd1c84b4748dab3e2c62624a29d03eca1
+  flutter_screen_capture: cc0f1c99c1e984e1a91df15c13a3ffac53d80288
   FlutterMacOS: 8f6f14fa908a6fb3fba0cd85dbd81ec4b251fb24
   GoogleUtilities: c2bdc4cf2ce786c4d2e6b3bcfd599a25ca78f06f
   "gRPC-C++": 9675f953ace2b3de7c506039d77be1f2e77a8db2
@@ -765,6 +776,7 @@ SPEC CHECKSUMS:
   path_provider_foundation: c68054786f1b4f3343858c1e1d0caaded73f0be9
   PromisesObjC: 09985d6d70fbe7878040aa746d78236e6946d2ef
   screen_capturer: 696de78ce7beff63eecf8aa709f839985a7836d7
+  screen_retriever: 59634572a57080243dd1bf715e55b6c54f241a38
 
 PODFILE CHECKSUM: 353c8bcc5d5b0994e508d035b5431cfe18c1dea7
 
